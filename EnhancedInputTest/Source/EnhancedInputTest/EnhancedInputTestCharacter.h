@@ -45,6 +45,9 @@ class AEnhancedInputTestCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* TestAction;
+
 public:
 	AEnhancedInputTestCharacter();
 	
@@ -57,6 +60,7 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 			
+	void TestPrintAction(const FInputActionValue& Value);
 
 protected:
 	// APawn interface

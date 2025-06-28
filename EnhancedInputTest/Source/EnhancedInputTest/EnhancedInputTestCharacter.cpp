@@ -66,7 +66,7 @@ void AEnhancedInputTestCharacter::BeginPlay()
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
-			//Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 			//Subsystem->RemoveMappingContext(DefaultMappingContext);
 			//Subsystem->HasMappingContext(DefaultMappingContext);
 		}
@@ -90,6 +90,9 @@ void AEnhancedInputTestCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::Look);
+
+		//Test
+		EnhancedInputComponent->BindAction(TestAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::TestPrintAction);
 	}
 	else
 	{
@@ -131,4 +134,11 @@ void AEnhancedInputTestCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+
+void AEnhancedInputTestCharacter::TestPrintAction(const FInputActionValue& Value)
+{
+	bool trigger = Value.Get<bool>();
+	UE_LOG(LogTemp, Warning, TEXT("Test Action %s"), (trigger ? TEXT("true") : TEXT("false")));
 }
