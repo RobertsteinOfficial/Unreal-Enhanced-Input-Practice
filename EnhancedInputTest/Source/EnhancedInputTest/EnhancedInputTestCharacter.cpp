@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
+
+
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
@@ -64,7 +66,9 @@ void AEnhancedInputTestCharacter::BeginPlay()
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			//Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			//Subsystem->RemoveMappingContext(DefaultMappingContext);
+			//Subsystem->HasMappingContext(DefaultMappingContext);
 		}
 	}
 }
