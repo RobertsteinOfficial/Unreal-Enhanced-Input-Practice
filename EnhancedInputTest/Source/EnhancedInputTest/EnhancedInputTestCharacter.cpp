@@ -71,6 +71,8 @@ void AEnhancedInputTestCharacter::BeginPlay()
 			//Subsystem->HasMappingContext(DefaultMappingContext);
 		}
 	}
+
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -93,6 +95,11 @@ void AEnhancedInputTestCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 
 		//Test
 		EnhancedInputComponent->BindAction(TestAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::TestPrintAction);
+
+		//Run
+		EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::Run);
+
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::Sprint);
 	}
 	else
 	{
@@ -141,4 +148,36 @@ void AEnhancedInputTestCharacter::TestPrintAction(const FInputActionValue& Value
 {
 	bool trigger = Value.Get<bool>();
 	UE_LOG(LogTemp, Warning, TEXT("Test Action %s"), (trigger ? TEXT("true") : TEXT("false")));
+}
+
+void AEnhancedInputTestCharacter::Run(const FInputActionValue& Value)
+{
+	if (isSprinting) return;
+	bool shouldRun = Value.Get<bool>();
+
+	//Not the best thing, it's just to test
+	if (shouldRun && GetCharacterMovement()->IsMovingOnGround())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+	}
+
+}
+
+void AEnhancedInputTestCharacter::Sprint(const FInputActionValue& Value)
+{
+	if (!isSprinting && GetCharacterMovement()->IsMovingOnGround())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+		isSprinting = true;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+		isSprinting = false;
+	}
+
 }

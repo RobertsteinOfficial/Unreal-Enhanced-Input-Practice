@@ -48,6 +48,24 @@ class AEnhancedInputTestCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* TestAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* RunAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SprintAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
+	float WalkSpeed = 200.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
+	float RunSpeed = 500.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
+	float SprintSpeed = 700.0f;
+
+	//Refs
+	bool isSprinting = false;
+
 public:
 	AEnhancedInputTestCharacter();
 	
@@ -61,6 +79,10 @@ protected:
 	void Look(const FInputActionValue& Value);
 			
 	void TestPrintAction(const FInputActionValue& Value);
+
+	void Run(const FInputActionValue& Value);
+
+	void Sprint(const FInputActionValue& Value);
 
 protected:
 	// APawn interface
