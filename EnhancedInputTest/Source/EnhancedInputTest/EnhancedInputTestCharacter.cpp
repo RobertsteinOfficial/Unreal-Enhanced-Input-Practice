@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
+#include "Kismet/GameplayStatics.h"
 
 
 #include "EnhancedInputComponent.h"
@@ -99,7 +100,11 @@ void AEnhancedInputTestCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 		//Run
 		EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::Run);
 
+		//Sprint
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::Sprint);
+
+		//Rotate
+		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &AEnhancedInputTestCharacter::Rotate);
 	}
 	else
 	{
@@ -180,4 +185,16 @@ void AEnhancedInputTestCharacter::Sprint(const FInputActionValue& Value)
 		isSprinting = false;
 	}
 
+}
+
+void AEnhancedInputTestCharacter::Rotate(const FInputActionValue& Value)
+{
+	float rotationValue = Value.Get<float>();
+	float deltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
+	
+	FRotator newRotation = GetActorRotation();
+
+	newRotation.Yaw += rotationValue * deltaTime * RotationSpeed;
+
+	SetActorRotation(newRotation);
 }

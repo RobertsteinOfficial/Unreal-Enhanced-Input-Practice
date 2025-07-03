@@ -54,6 +54,10 @@ class AEnhancedInputTestCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SprintAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* RotateAction;
+
+	//Stats  
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
 	float WalkSpeed = 200.0f;
 
@@ -62,6 +66,9 @@ class AEnhancedInputTestCharacter : public ACharacter
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
 	float SprintSpeed = 700.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Stats, meta = (AllowPrivateAccess = "true"))
+	float RotationSpeed = 50.0f;
 
 	//Refs
 	bool isSprinting = false;
@@ -78,11 +85,7 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 			
-	void TestPrintAction(const FInputActionValue& Value);
-
-	void Run(const FInputActionValue& Value);
-
-	void Sprint(const FInputActionValue& Value);
+	
 
 protected:
 	// APawn interface
@@ -96,5 +99,14 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+private:
+	void TestPrintAction(const FInputActionValue& Value);
+
+	void Run(const FInputActionValue& Value);
+
+	void Sprint(const FInputActionValue& Value);
+
+	void Rotate(const FInputActionValue& Value);
 };
 
